@@ -4,7 +4,7 @@ Needs Python Version 3.x
 
 This Python script analyses DMARC XML reports from differend mailbox providers (GMail, AOL, Yahoo, ...) 
 
-# What is DMARC?
+## What is DMARC?
 DMARC stands for Domain-based Message Authentication, Reporting and Conformance and is an email authentication protocol that helps to 
 protect your domain from email scams or phishing emails. DMARC is a txt (text) record in your DNS zone. The DNS entry can be checked from 
 the received email server. This entry documents how the receiving email server should handle emails that have no or invalid SPF or a 
@@ -20,7 +20,7 @@ Example:
 
 More information: https://dmarc.org/
 
-# What are DKIM and SPF? 
+## What are DKIM and SPF? 
 SPF (Sender Policy Framework) 
 
 DKIM (
