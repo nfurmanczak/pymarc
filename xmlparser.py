@@ -4,7 +4,19 @@ import xml.etree.ElementTree as ET
 import time
 import mysql.connector
 
-# Connection to SQL Database 
+class IP:
+    pass
+
+class XMLReport:
+    source = 0
+    reportid = 0
+    startdate = 0
+    enddate = 0
+
+
+xml = XMLReport()
+
+# Connection to SQL Database
 
 db = mysql.connector.connect(
     host='localhost',
@@ -22,16 +34,20 @@ print("METADATA: ")
 print("#################")
 for orgname in root.iter('org_name'):
     print("Quelle: " + orgname.text)
+    xml.source = orgname.text
 for reportid in root.iter('report_id'):
     print("Report ID: " + reportid.text)
+    xml.reportid = reportid.text
 for daterange in root.iter('date_range'):
     for begin in daterange.iter('begin'):
         # MySQL DateTime format: YYYY-MM-DD HH:MM:SS
         beginDate = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(begin.text)))
         print(beginDate)
+        xml.startdate = beginDate
     for end in daterange.iter('end'):
         endDate = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(end.text)))
         print(endDate)
+        xml.enddate = endDate
 
 
 # IP Daten
@@ -48,10 +64,10 @@ for record in root.findall('record'):
                 print("DKIM: " + dkim.text)
             for spf in policy_evaluated.findall('spf'):
                 print("SPF:" + spf.text)
-        print("IPX") 
+        print("IPX")
 
 #reportInsert = "insert into reports(source, reportid, startdate, enddate, ip, msgcount, spf, dkim) value(%s, %s, %s, %s, %s, %s, %s, %s)"
- 
+
 #reportData = [
 #    ('title 2', 'content 2', datetime.now.date(), 1),
 #    ('title 3', 'content 3', datetime.now.date(), 1),
@@ -59,7 +75,13 @@ for record in root.findall('record'):
 #    ('title 5', 'content 5', datetime.now.date(), 1),
 #    ('title 6', 'content 6', datetime.now.date(), 1),
 #]
- 
+
+print("Objekt:")
+print(xml.source)
+print(xml.reportid)
+print(xml.enddate)
+print(xml.startdate)
+
 #cursor.executemany(sql2, data2)
-# 
+#
 #db.commit()  # commit the changes
